@@ -1,0 +1,49 @@
+{% extends 'layouts/base.html' %} {% block content %}
+
+<div class="d-flex justify-content-between mb-3">
+  <h2>Data Alternatif</h2>
+
+  <a href="/alternatif/tambah/" class="btn btn-success"> + Tambah Alternatif </a>
+</div>
+
+<table class="table table-bordered table-striped">
+  <thead class="table-success">
+    <tr>
+      <th>No</th>
+
+      <th>Kode</th>
+
+      <th>Nama Alternatif</th>
+
+      <th width="180">Aksi</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for item in data %}
+
+    <tr>
+      <td>{{forloop.counter}}</td>
+
+      <td>{{item.kode}}</td>
+
+      <td>{{item.nama}}</td>
+
+      <td>
+        <a href="{% url 'edit_alternatif' item.id %}" class="btn btn-warning btn-sm"> Edit </a>
+
+        <a href="{% url 'hapus_alternatif' item.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus data ini?');"> Hapus </a>
+      </td>
+    </tr>
+
+    {% empty %}
+
+    <tr>
+      <td colspan="4" align="center">Belum ada data.</td>
+    </tr>
+
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

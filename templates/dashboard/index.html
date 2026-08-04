@@ -1,0 +1,103 @@
+{% extends 'layouts/base.html' %} {% block content %}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-4 mb-4">
+      <div class="card bg-success text-white">
+        <div class="card-body text-center">
+          <h5><i class="bi bi-water"></i></h5>
+
+          <h4>Alternatif</h4>
+
+          <h1>{{ jumlah_alternatif }}</h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 mb-4">
+      <div class="card bg-primary text-white">
+        <div class="card-body text-center">
+          <h5><i class="bi bi-list-check"></i></h5>
+
+          <h4>Kriteria</h4>
+
+          <h1>{{ jumlah_kriteria }}</h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 mb-4">
+      <div class="card bg-warning">
+        <div class="card-body text-center">
+          <h5><i class="bi bi-pencil-square"></i></h5>
+
+          <h4>Penilaian</h4>
+
+          <h1>{{ jumlah_penilaian }}</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header bg-success text-white">
+          <h4>🏆 Alternatif Terbaik</h4>
+        </div>
+
+        <div class="card-body">
+          {% if terbaik %}
+
+          <h2 class="text-success">{{ terbaik.0 }}</h2>
+
+          <hr />
+
+          <h4>Nilai Yi</h4>
+
+          <h2>{{ terbaik.1 }}</h2>
+
+          {% else %} Belum ada hasil. {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h4>Top Ranking</h4>
+        </div>
+
+        <div class="card-body">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Ranking</th>
+
+                <th>Alternatif</th>
+
+                <th>Yi</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {% for item in ranking %}
+
+              <tr>
+                <td>{{ forloop.counter }}</td>
+
+                <td>{{ item.0 }}</td>
+
+                <td>{{ item.1 }}</td>
+              </tr>
+
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

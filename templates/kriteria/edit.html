@@ -1,0 +1,27 @@
+{% extends 'layouts/base.html' %} {% block content %}
+
+<h2>Edit Alternatif</h2>
+
+<hr />
+
+<form method="POST">
+  {% csrf_token %}
+
+  <div class="mb-3">
+    <label>Kode</label>
+
+    {{ form.kode }}
+  </div>
+
+  <div class="mb-3">
+    <label>Nama Alternatif</label>
+
+    {{ form.nama }}
+  </div>
+
+  <button class="btn btn-warning">Update</button>
+
+  <a href="{% url 'alternatif' %}" class="btn btn-secondary"> Kembali </a>
+</form>
+
+{% endblock %}

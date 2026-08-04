@@ -1,0 +1,45 @@
+{% extends 'layouts/base.html' %} {% block content %}
+
+<h2>Tambah Penilaian</h2>
+<hr />
+
+<form method="POST">
+  {% csrf_token %} {{ form.as_p }}
+
+  <button type="submit" class="btn btn-success">Simpan</button>
+
+  <a href="{% url 'penilaian' %}" class="btn btn-secondary"> Kembali </a>
+</form>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    $("#id_kriteria").change(function () {
+      let kriteria = $(this).val();
+
+      $.ajax({
+        url: "{% url 'get_subkriteria' %}",
+
+        data: {
+          kriteria: kriteria,
+        },
+
+        success: function (data) {
+          let html = '<option value="">---------</option>';
+
+          data.forEach(function (item) {
+            html += `<option value="${item.id}">
+                                ${item.deskripsi}
+                             </option>`;
+          });
+
+          $("#id_subkriteria").html(html);
+        },
+      });
+    });
+  });
+</script>
+
+{% endblock %}

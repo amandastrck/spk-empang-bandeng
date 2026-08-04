@@ -1,0 +1,43 @@
+{% extends 'layouts/base.html' %} {% block content %}
+
+<div class="d-flex justify-content-between mb-3">
+  <h2>Data Penilaian</h2>
+
+  <a href="/penilaian/tambah/" class="btn btn-success"> + Tambah Penilaian </a>
+</div>
+
+<table class="table table-bordered table-striped">
+  <thead class="table-success">
+    <tr>
+      <th>No</th>
+      <th>Alternatif</th>
+      <th>Kriteria</th>
+      <th>Sub Kriteria</th>
+      <th width="170">Aksi</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for item in data %}
+
+    <tr>
+      <td>{{ forloop.counter }}</td>
+
+      <td>{{ item.alternatif }}</td>
+
+      <td>{{ item.kriteria }}</td>
+
+      <td>{{ item.subkriteria }}</td>
+
+      <td>
+        <a href="{% url 'edit_penilaian' item.id %}" class="btn btn-warning btn-sm"> Edit </a>
+
+        <a href="{% url 'hapus_penilaian' item.id %}" class="btn btn-danger btn-sm"> Hapus </a>
+      </td>
+    </tr>
+
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

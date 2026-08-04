@@ -1,0 +1,46 @@
+{% extends 'layouts/base.html' %} {% block content %}
+
+<div class="d-flex justify-content-between mb-3">
+  <h2>Data Kriteria</h2>
+
+  <a href="/kriteria/tambah/" class="btn btn-success"> + Tambah Kriteria </a>
+</div>
+
+<table class="table table-bordered table-striped">
+  <thead class="table-success">
+    <tr>
+      <th>No</th>
+      <th>Kode</th>
+      <th>Nama Kriteria</th>
+      <th>Bobot</th>
+      <th>Jenis</th>
+      <th width="180">Aksi</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for item in data %}
+
+    <tr>
+      <td>{{ forloop.counter }}</td>
+
+      <td>{{ item.kode }}</td>
+
+      <td>{{ item.nama }}</td>
+
+      <td>{{ item.bobot }}</td>
+
+      <td>{{ item.jenis }}</td>
+
+      <td>
+        <a href="{% url 'edit_kriteria' item.id %}" class="btn btn-warning btn-sm"> Edit </a>
+
+        <a href="{% url 'hapus_kriteria' item.id %}" class="btn btn-danger btn-sm"> Hapus </a>
+      </td>
+    </tr>
+
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

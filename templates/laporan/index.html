@@ -1,0 +1,262 @@
+{% extends 'layouts/base.html' %} {% load moora_tags %} {% block content %}
+
+<div class="card shadow">
+  <div class="card-body">
+    <!-- Tombol Cetak -->
+    <div class="mb-3 no-print">
+      <button class="btn btn-success" onclick="window.print()">🖨 Cetak PDF</button>
+    </div>
+
+    <!-- Header -->
+
+    <div class="text-center mb-4">
+      <h2><b>LAPORAN HASIL PERHITUNGAN</b></h2>
+
+      <h4>Sistem Pendukung Keputusan</h4>
+
+      <h5>Pemilihan Pengelolaan Empang Bandeng</h5>
+
+      <h5>Menggunakan Metode MOORA</h5>
+
+      <hr />
+
+      <p><strong>Tanggal Cetak :</strong> {% now "d F Y" %}</p>
+    </div>
+
+    <!-- Alternatif Terbaik -->
+
+    <div class="alert alert-success">
+      <h4>🏆 Alternatif Terbaik</h4>
+
+      <h2>{{ ranking.0.0 }}</h2>
+
+      <h5>Nilai Yi : {{ ranking.0.1 }}</h5>
+    </div>
+
+    <hr />
+
+    <!-- Matriks Keputusan -->
+
+    <h4>1. Matriks Keputusan</h4>
+
+    <table class="table table-bordered table-striped">
+      <thead class="table-success">
+        <tr>
+          <th>Alternatif</th>
+
+          {% for k in kriteria %}
+          <th>{{ k.kode }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for alternatif,nilai in matriks.items %}
+
+        <tr>
+          <td>{{ alternatif }}</td>
+
+          {% for k in kriteria %}
+          <td>{{ nilai|get_item:k.kode }}</td>
+          {% endfor %}
+        </tr>
+
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <hr />
+
+    <!-- Matriks Normalisasi -->
+
+    <h4>2. Matriks Normalisasi</h4>
+
+    <table class="table table-bordered table-striped">
+      <thead class="table-primary">
+        <tr>
+          <th>Alternatif</th>
+
+          {% for k in kriteria %}
+          <th>{{ k.kode }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for alternatif,nilai in normal.items %}
+
+        <tr>
+          <td>{{ alternatif }}</td>
+
+          {% for k in kriteria %}
+          <td>{{ nilai|get_item:k.kode }}</td>
+          {% endfor %}
+        </tr>
+
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <hr />
+
+    <!-- Matriks Terbobot -->
+
+    <h4>3. Matriks Ternormalisasi Terbobot</h4>
+
+    <table class="table table-bordered table-striped">
+      <thead class="table-warning">
+        <tr>
+          <th>Alternatif</th>
+
+          {% for k in kriteria %}
+          <th>{{ k.kode }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for alternatif,nilai in terbobot.items %}
+
+        <tr>
+          <td>{{ alternatif }}</td>
+
+          {% for k in kriteria %}
+          <td>{{ nilai|get_item:k.kode }}</td>
+          {% endfor %}
+        </tr>
+
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <hr />
+
+    <!-- Nilai Optimasi -->
+
+    <h4>4. Nilai Optimasi (Yi)</h4>
+
+    <table class="table table-bordered table-striped">
+      <thead class="table-info">
+        <tr>
+          <th>Alternatif</th>
+
+          <th>Nilai Yi</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for alt,nilai in optimasi.items %}
+
+        <tr>
+          <td>{{ alt }}</td>
+
+          <td>{{ nilai }}</td>
+        </tr>
+
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <hr />
+
+    <!-- Ranking -->
+
+    <h4>5. Ranking Alternatif</h4>
+
+    <table class="table table-bordered table-striped">
+      <thead class="table-danger">
+        <tr>
+          <th>Ranking</th>
+
+          <th>Alternatif</th>
+
+          <th>Nilai Yi</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for item in ranking %}
+
+        <tr>
+          <td>{{ forloop.counter }}</td>
+
+          <td>{{ item.0 }}</td>
+
+          <td>{{ item.1 }}</td>
+        </tr>
+
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <hr />
+
+    <!-- Kesimpulan -->
+
+    <h4>Kesimpulan</h4>
+
+    <p style="text-align: justify; line-height: 1.8">
+      Berdasarkan hasil perhitungan menggunakan metode
+      <b>Multi-Objective Optimization on the Basis of Ratio Analysis (MOORA)</b>, diperoleh bahwa alternatif
+      <b>{{ ranking.0.0 }}</b>
+      memiliki nilai optimasi (Yi) tertinggi sebesar
+      <b>{{ ranking.0.1 }}</b>. Dengan demikian alternatif tersebut direkomendasikan sebagai alternatif terbaik dalam pemilihan pengelolaan empang bandeng berdasarkan lima kriteria yang digunakan pada penelitian ini.
+    </p>
+
+    <br /><br />
+
+    <!-- Tanda Tangan -->
+
+    <div class="text-end mt-5">
+      <p>Muara Jawa, {% now "d F Y" %}</p>
+
+      <br /><br /><br />
+
+      <p><strong>Peneliti</strong></p>
+
+      <br /><br /><br />
+
+      <p>(........................................)</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  .no-print {
+    margin-bottom: 20px;
+  }
+
+  @media print {
+    .sidebar {
+      display: none !important;
+    }
+
+    .topbar {
+      display: none !important;
+    }
+
+    .no-print {
+      display: none !important;
+    }
+
+    body {
+      background: white !important;
+    }
+
+    .content {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    .card {
+      border: none !important;
+      box-shadow: none !important;
+    }
+
+    table {
+      font-size: 11px;
+    }
+  }
+</style>
+
+{% endblock %}
