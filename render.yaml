@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: spk-empang-bandeng
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn spk_empang.wsgi:application"
